@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SSN 학생 화면</title>
+  <link rel="stylesheet" href="student.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-one" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <h1>스마트 스케줄 노티스</h1>
+    <div class="meta">
+      <span id="classLabel" class="chip">반: 확인 중</span>
+      <span id="dateLabel" class="chip">날짜: 확인 중</span>
+      <span id="currentPeriodLabel" class="chip">현재: 확인 중</span>
+      <span id="nextPeriodLabel" class="chip">다음: 확인 중</span>
+      <span id="clock" class="clock">--:--</span>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="main-card" aria-live="polite">
+      <div class="badge" id="noticeBadge">안내</div>
+      <h2 id="mainNoticeHeading">공지 대기 중</h2>
+      <p id="mainNoticeBody">선생님이 공지를 등록하면 여기에 크게 표시됩니다.</p>
+    </section>
+
+    <aside class="side-panel">
+      <h3 id="todayScheduleTitle">오늘 시간표</h3>
+      <table class="schedule-table" aria-label="오늘 시간표">
+        <thead>
+          <tr>
+            <th scope="col">교시</th>
+            <th scope="col">과목</th>
+          </tr>
+        </thead>
+        <tbody id="scheduleBody"></tbody>
+      </table>
+
+      <div class="calendar-head">
+        <h3>공지 달력</h3>
+        <div class="calendar-nav">
+          <button id="calendarPrevMonth" type="button" class="mini-btn" aria-label="이전 달">◀</button>
+          <span id="calendarMonthLabel" class="month-label">----</span>
+          <button id="calendarNextMonth" type="button" class="mini-btn" aria-label="다음 달">▶</button>
+        </div>
+      </div>
+      <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="학생 화면 공지 달력"></div>
+
+      <h3 id="selectedDateTitle">선택 날짜 공지</h3>
+      <p class="notice-open-hint">목록 공지를 누르면 큰 공지 화면으로 열립니다.</p>
+      <ul id="noticeList" class="notice-list"></ul>
+    </aside>
+  </main>
+
+  <script src="student.js"></script>
+</body>
+</html>
