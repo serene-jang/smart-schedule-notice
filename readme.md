@@ -197,11 +197,28 @@
 
 ---
 
-## 배포 링크 (온라인에서 바로 사용)
-- **선생님 화면**: https://serene-jang.github.io/smart-schedule-notice/
-- **학생 화면**: https://serene-jang.github.io/smart-schedule-notice/student.html
+## 🌐 배포 링크 (온라인에서 바로 사용)
 
-> 💡 **팁**: 위 링크로 가면 앱을 온라인에서 바로 실행할 수 있습니다!
+### 📱 앱 실행하기
+이 링크들을 클릭하면 설치 없이 바로 앱을 사용할 수 있습니다!
+
+#### 🏫 선생님 화면
+```
+https://serene-jang.github.io/smart-schedule-notice/
+```
+👉 [선생님 화면 열기](https://serene-jang.github.io/smart-schedule-notice/)
+
+#### 👨‍🎓 학생 화면
+```
+https://serene-jang.github.io/smart-schedule-notice/student.html
+```
+👉 [학생 화면 열기](https://serene-jang.github.io/smart-schedule-notice/student.html)
+
+---
+
+> 💡 **팁**: 위 링크를 클릭하거나 URL을 복사해서 브라우저에 붙여넣으면 앱을 온라인에서 바로 실행할 수 있습니다!
+> 
+> 💻 **컴퓨터, 태블릿, 스마트보드 모두 지원합니다!**
 
 ## 예상 일정
 | 주차 | 단계 | 세부 내용 |
