@@ -59,7 +59,7 @@
 - 반별 시간표 관리  
 - 공지사항 작성 및 전송
 
-> 📱 선생님 화면은 [여기](https://serene-jang.github.io/smart-schedule-notice/)에서 직접 확인할 수 있습니다!
+> 📱 선생님 화면은 [여기](https://ssnstatic504431.z12.web.core.windows.net/index.html)에서 직접 확인할 수 있습니다!
 
 ### 👨‍🎓 학생 화면
 선생님이 전송한 공지사항을 크게 표시하고 음성으로 읽어주는 화면입니다.
@@ -67,7 +67,7 @@
 - 오늘 시간표 표시
 - 공지 달력 및 리스트 관리
 
-> 📱 학생 화면은 [여기](https://serene-jang.github.io/smart-schedule-notice/student.html)에서 직접 확인할 수 있습니다!
+> 📱 학생 화면은 [여기](https://ssnstatic504431.z12.web.core.windows.net/student.html)에서 직접 확인할 수 있습니다!
 
 ---
 
@@ -224,15 +224,15 @@
 
 #### 🏫 선생님 화면
 ```
-https://serene-jang.github.io/smart-schedule-notice/
+https://ssnstatic504431.z12.web.core.windows.net/index.html
 ```
-👉 [선생님 화면 열기](https://serene-jang.github.io/smart-schedule-notice/)
+👉 [선생님 화면 열기](https://ssnstatic504431.z12.web.core.windows.net/index.html)
 
 #### 👨‍🎓 학생 화면
 ```
-https://serene-jang.github.io/smart-schedule-notice/student.html
+https://ssnstatic504431.z12.web.core.windows.net/student.html
 ```
-👉 [학생 화면 열기](https://serene-jang.github.io/smart-schedule-notice/student.html)
+👉 [학생 화면 열기](https://ssnstatic504431.z12.web.core.windows.net/student.html)
 
 ---
 
