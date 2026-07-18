@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>스마트 스케줄 노티스 (SSN)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-shape bg-shape-one" aria-hidden="true"></div>
+  <div class="bg-shape bg-shape-two" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <h1>스마트 스케줄 노티스</h1>
+    <div class="topbar-meta">
+      <span class="screen-badge">현재 화면: 선생님</span>
+      <div id="currentDateTime" class="clock">--:--:--</div>
+      <button id="fullscreenButton" class="ghost-button" type="button">전체화면</button>
+      <button id="openGuideButton" class="ghost-button" type="button">사용법 보기</button>
+    </div>
+  </header>
+
+  <section class="status-strip" aria-live="polite">
+    <p id="syncStatusText" class="sync-status">동기화 상태: 시작 전</p>
+    <div class="status-actions">
+      <button id="runTestsButton" class="ghost-button" type="button">기본 테스트 실행</button>
+      <p id="systemMessage" class="system-message hidden">안내 메시지</p>
+    </div>
+  </section>
+
+  <main class="layout">
+    <section class="notice-view panel" aria-labelledby="noticeTitle">
+      <div class="panel-head">
+        <h2 id="noticeTitle">현재 공지</h2>
+        <span id="noticeBadge" class="badge">안내</span>
+      </div>
+      <article class="notice-card">
+        <h3 id="mainNoticeHeading">오늘 등록된 공지가 없습니다.</h3>
+        <p id="mainNoticeBody">오른쪽 아래 공지 목록에서 새 공지를 추가하면 이곳에 크게 표시됩니다.</p>
+      </article>
+      <div class="notice-controls">
+        <button id="startRotateButton" class="primary-button" type="button">자동 전환 시작</button>
+        <button id="stopRotateButton" class="ghost-button" type="button">자동 전환 중지</button>
+        <button id="speakButton" class="ghost-button" type="button">다시 듣기</button>
+      </div>
+       <a class="view-toggle-link" href="student.html" target="_blank" rel="noopener noreferrer">학생 화면 열기</a>
+    </section>
+
+    <aside class="side-column">
+      <section class="panel timetable" aria-labelledby="timetableTitle">
+        <div class="panel-head">
+          <h2 id="timetableTitle">오늘 시간표</h2>
+          <div class="period-chip-group">
+            <span id="currentPeriodLabel" class="period-chip">현재: 확인 중</span>
+            <span id="nextPeriodLabel" class="period-chip next">다음: 확인 중</span>
+          </div>
+        </div>
+        <div class="upload-card">
+          <label class="upload-label" for="timetableExcelInput">시간표 엑셀 업로드</label>
+          <input id="timetableExcelInput" type="file" accept=".xlsx,.xls,.csv" />
+          <p class="upload-help">엑셀을 올리면 시간표를 한 번에 불러옵니다.</p>
+        </div>
+        <div class="mini-filter-row class-step-row class-first-row">
+          <label>반 선택
+            <select id="classFilterSelect"></select>
+          </label>
+        </div>
+
+        <div class="class-board">
+          <section class="class-board-pane">
+            <h3 class="sub-title">선택한 반 시간표</h3>
+            <div class="timetable-table-wrap">
+              <table class="timetable-table" aria-label="반 시간표">
+                <thead>
+                  <tr>
+                    <th scope="col">교시</th>
+                    <th scope="col">과목</th>
+                    <th scope="col">선생님</th>
+                    <th scope="col">시간</th>
+                    <th scope="col" class="teacher-only">관리</th>
+                  </tr>
+                </thead>
+                <tbody id="timetableTableBody"></tbody>
+              </table>
+            </div>
+          </section>
+          <section class="class-board-pane">
+            <div class="calendar-nav">
+              <button id="calendarPrevMonth" class="ghost-button tiny-nav" type="button" aria-label="이전 달">◀</button>
+              <strong id="calendarMonthLabel">0000년 00월</strong>
+              <button id="calendarNextMonth" class="ghost-button tiny-nav" type="button" aria-label="다음 달">▶</button>
+            </div>
+            <div id="calendarGrid" class="calendar-grid" role="grid" aria-label="공지 달력"></div>
+            <ul id="noticeCalendarList" class="list compact-list"></ul>
+          </section>
+        </div>
+
+        <details class="advanced-block teacher-only">
+          <summary>고급: 수동 시간표 입력</summary>
+          <div class="mini-filter-row">
+            <label>표시 요일
+              <select id="dayFilterSelect">
+                <option value="월">월</option>
+                <option value="화">화</option>
+                <option value="수">수</option>
+                <option value="목">목</option>
+                <option value="금">금</option>
+              </select>
+            </label>
+          </div>
+          <form id="timetableForm" class="mini-form" novalidate>
+            <label>반/학급
+              <select id="classNameInput"></select>
+            </label>
+            <label>요일
+              <select id="dayInput">
+                <option value="월">월</option>
+                <option value="화">화</option>
+                <option value="수">수</option>
+                <option value="목">목</option>
+                <option value="금">금</option>
+              </select>
+            </label>
+            <label>교시
+              <input id="periodInput" type="text" placeholder="예: 4교시" required />
+            </label>
+            <label>과목
+              <input id="subjectInput" type="text" placeholder="예: 사회" required />
+            </label>
+            <label>선생님
+              <input id="teacherInput" type="text" placeholder="예: 김선생님" required />
+            </label>
+            <label>시작
+              <input id="startTimeInput" type="text" placeholder="HH:MM" required />
+            </label>
+            <label>종료
+              <input id="endTimeInput" type="text" placeholder="HH:MM" required />
+            </label>
+            <div class="mini-form-actions">
+              <button id="timetableSubmitButton" class="primary-button" type="submit">시간표 추가</button>
+              <button id="cancelTimetableEditButton" class="ghost-button hidden" type="button">수정 취소</button>
+            </div>
+            <p id="timetableError" class="field-error hidden">오류 문구</p>
+          </form>
+        </details>
+      </section>
+
+      <section class="panel notices" aria-labelledby="noticesTitle">
+        <div class="panel-head">
+          <h2 id="noticesTitle">전체 공지 관리</h2>
+        </div>
+        <div id="teacherNoticeEditor" class="teacher-only">
+          <p class="teacher-only-caption">선생님 전용: 입력 후 전송 버튼을 누르면 학생 화면으로 전달됩니다.</p>
+          <div id="timetableShortcuts" class="timetable-shortcuts"></div>
+          <form id="noticeForm" class="mini-form" novalidate>
+            <label>반/학급
+              <select id="noticeClassInput"></select>
+            </label>
+            <label>교시
+              <input id="noticePeriodInput" type="text" placeholder="예: 3교시" required />
+            </label>
+            <label>과목
+              <input id="noticeSubjectInput" type="text" placeholder="예: 과학" required />
+            </label>
+            <label>선생님
+              <input id="noticeTeacherInput" type="text" placeholder="예: 장선생님" required />
+            </label>
+            <label>시간
+              <input id="noticeTimeInput" type="text" placeholder="예: 10:40~11:25" required />
+            </label>
+            <label>공지 날짜
+              <input id="noticeDateInput" type="date" required />
+            </label>
+            <label>내용만 입력
+              <textarea id="noticeBodyInput" rows="2" placeholder="공지할 내용을 입력하세요" required></textarea>
+            </label>
+            <label>중요도
+              <select id="noticePriorityInput">
+                <option value="안내">안내</option>
+                <option value="중요">중요</option>
+              </select>
+            </label>
+            <div class="mini-form-actions">
+              <button id="noticeSubmitButton" class="primary-button" type="submit">전송</button>
+              <button id="cancelNoticeEditButton" class="ghost-button hidden" type="button">수정 취소</button>
+            </div>
+            <p id="noticeError" class="field-error hidden">오류 문구</p>
+          </form>
+
+          <section class="class-example-board">
+            <h3 class="sub-title">선생님 입력 공지 예시</h3>
+            <ul id="classNoticePreviewList" class="list compact-list"></ul>
+          </section>
+        </div>
+
+        <details class="advanced-block teacher-only">
+          <summary>고급: 공지 필터/정렬</summary>
+          <div class="mini-filter-row">
+            <label>검색
+              <input id="noticeSearchInput" type="text" placeholder="제목/내용 검색" />
+            </label>
+            <label>반 필터
+              <select id="noticeClassFilterSelect"></select>
+            </label>
+            <label>날짜 필터
+              <input id="noticeDateFilterInput" type="date" />
+            </label>
+            <label>중요도 필터
+              <select id="noticePriorityFilterSelect">
+                <option value="all">전체</option>
+                <option value="중요">중요</option>
+                <option value="안내">안내</option>
+              </select>
+            </label>
+            <label>정렬
+              <select id="noticeSortSelect">
+                <option value="priority-time">중요도 우선 + 최신순</option>
+                <option value="time-desc">날짜 최신순</option>
+                <option value="time-asc">날짜 오래된순</option>
+              </select>
+            </label>
+          </div>
+          <ul id="noticeList" class="list"></ul>
+        </details>
+      </section>
+    </aside>
+  </main>
+
+  <div id="guideModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <div class="modal-card">
+      <h2 id="guideTitle">처음 실행 가이드</h2>
+      <ol>
+        <li>앱은 index.html 파일을 브라우저에서 열면 바로 실행됩니다.</li>
+        <li>오늘 시간표를 먼저 입력해 주세요.</li>
+        <li>공지 제목과 내용을 등록해 주세요.</li>
+        <li>자동 전환을 켜면 공지가 순서대로 표시됩니다.</li>
+      </ol>
+      <p class="modal-tip">교실 화면에서는 상단의 전체화면 버튼을 눌러 더 크게 표시할 수 있습니다. 이 안내는 언제든지 사용법 보기로 다시 열 수 있습니다.</p>
+      <button id="closeGuideButton" class="primary-button" type="button">확인</button>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
